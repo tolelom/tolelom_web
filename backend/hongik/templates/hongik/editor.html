@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+
+{% block title %}홍익 언어 에디터{% endblock %}
+
+{% block content %}
+    <meta name="csrf-token" content="{{ csrf_token }}">
+
+    <div class="container mt-4">
+        <ul class="nav nav-tabs mb-3">
+            <li class="nav-item">
+                <button class="nav-link active" id="interactive-tab">대화형 모드</button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" id="batch-tab">일괄 실행</button>
+            </li>
+        </ul>
+
+        <!-- 대화형 모드 -->
+        <div id="interactive-mode">
+            <div id="repl-output" class="bg-light p-3 mb-3" style="height: 300px; overflow-y: auto;"></div>
+            <div class="input-group">
+                <input type="text" id="repl-input" class="form-control" placeholder="한 줄씩 입력하세요...">
+                <button id="repl-execute" class="btn btn-primary">실행</button>
+            </div>
+        </div>
+
+        <!-- 일괄 실행 모드 -->
+        <div id="batch-mode" class="d-none">
+            <form id="batch-form">
+                {% csrf_token %}
+                <textarea name="code" class="form-control" rows="10" placeholder="전체 코드를 입력하세요...">{{ code }}</textarea>
+                <button type="button" id="batch-execute" class="btn btn-primary mt-2">전체 실행</button>
+            </form>
+            {% if result %}
+                <div class="mt-3">
+                    <h5>실행 결과</h5>
+                    <pre class="bg-light p-3">{{ result }}</pre>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_script %}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+
+        const csrftoken = document.querySelector("meta[name=csrf-token]").getAttribute("content");
+
+        // AJAX 요청 시 항상 CSRF 토큰을 헤더에 포함
+        $.ajaxSetup({
+            headers: {"X-CSRFToken": csrftoken}
+        });
+
+        // 탭 전환
+        $('#interactive-tab').click(function () {
+            $(this).addClass('active');
+            $('#batch-tab').removeClass('active');
+            $('#interactive-mode').removeClass('d-none');
+            $('#batch-mode').addClass('d-none');
+        });
+        $('#batch-tab').click(function () {
+            $(this).addClass('active');
+            $('#interactive-tab').removeClass('active');
+            $('#batch-mode').removeClass('d-none');
+            $('#interactive-mode').addClass('d-none');
+        });
+
+        // 대화형 실행
+        $('#repl-execute').click(executeRepl);
+        $('#repl-input').keypress(function (e) {
+            if (e.which == 13) executeRepl();
+        });
+
+        $('#batch-mode').on('click', '#batch-execute', function (e) {
+            e.preventDefault();
+            $.ajax({
+                url: '{% url 'hongik:execute_batch' %}',
+                type: 'POST',
+                data: $('#batch-form').serialize(),
+                headers: {"X-CSRFToken": csrftoken},
+                success: function (data) {
+                    $('#batch-mode').html($(data).find('#batch-mode').html());
+                }
+            });
+        });
+
+
+        function executeRepl() {
+            const code = $('#repl-input').val();
+            if (!code) return;
+            $('#repl-input').val('');
+            $('#repl-output').append(`<div>> ${code}</div>`);
+            $.post('{% url 'hongik:execute_interactive %}', {code_line: code}, function (data) {
+                $('#repl-output').append(`<div>${data.result}</div>`);
+                $('#repl-output').scrollTop($('#repl-output')[0].scrollHeight);
+            });
+        }
+    </script>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}프로그래밍 언어, 홍익{% endblock %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h1>홍익 프로그래밍 언어에 오신 것을 환영합니다!</h1>
+        <p class="mt-3">누구나 쉽게 배우고 사용할 수 있는 프로그래밍 언어입니다.</p>
+
+        <section class="mt-4">
+            <h2>한글 프로그래밍 언어로 쉽게 입문할 수 있어요</h2>
+            <p class="mt-3">프로그래밍 언어 뿐만 아니라 관련 용어나 자료들은 대부분 영어 중심이어서 한국인 프로그래밍 입문자들에게 영어는 큰 진입 장벽이 되고 있습니다. 문법이 간결하고
+                한글 키워드로 이루어진 언어를 통해 코딩을 쉽게 배워보세요!</p>
+        </section>
+
+        <section class="mt-4">
+            <h2>주요 특징</h2>
+            <ul>
+                <li>간결하고 읽기 쉬운 문법</li>
+                <li>실행 결과를 바로 확인할 수 있는 온라인 에디터</li>
+                <li>다양한 예제와 튜토리얼 제공</li>
+            </ul>
+        </section>
+
+        <section class="mt-4">
+            <h2>문법 튜토리얼을 따라가보세요!</h2>
+            <p class="mt-3">처음 시작하는 분들을 위한 문법 튜토리얼이 준비되어 있어요. 학습 체크를 위한 간단한 문법 문제도 제공할 예정이에요.</p>
+            <a href="{% url 'hongik:docs' %}" class="btn btn-outline-primary">문서 보기</a>
+        </section>
+
+        <section class="mt-4">
+            <h2>빠른 시작</h2>
+            <pre><code>print("Hello, World!")</code></pre>
+            <a href="{% url 'hongik:editor' %}" class="btn btn-primary">에디터 바로가기</a>
+        </section>
+
+        <section class="mt-4">
+            <h2>더 알아보기</h2>
+            {#    <a href="{% url 'hongik:tutorial' %}" class="btn btn-outline-primary">튜토리얼 시작하기</a>#}
+        </section>
+    </div>
+{% endblock %}

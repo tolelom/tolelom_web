@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Tolelom{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'core:home' %}">Tolelom</a>
+        <div class="collapse navbar-collapse">
+            <div class="navbar-nav me-auto">
+                <a class="nav-link" href="{% url 'hongik:index' %}">홍익</a>
+                <!-- 블로그 앱이 생기면 추가 -->
+            </div>
+            <div class="navbar-nav">
+                {% if user.is_authenticated %}
+                    <span class="navbar-text me-3">{{ user.username }}</span>
+                    <a class="nav-link" href="{% url 'accounts:logout' %}">로그아웃</a>
+                {% else %}
+                    <a class="nav-link" href="{% url 'accounts:login' %}">로그인</a>
+                    <a class="nav-link" href="{% url 'accounts:signup' %}">회원가입</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</nav>
+
+<main class="container mt-4">
+    {% block content %}
+        <h1>톨레롬 웹 페이지</h1>
+    {% endblock %}
+</main>
+
+<footer class="mt-5 py-3 bg-light text-center">
+    <div class="container">
+        <span class="text-muted">© 2025 Tolelom</span>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
+        crossorigin="anonymous"></script>
+{% block extra_script %}{% endblock %}
+</body>
+</html>

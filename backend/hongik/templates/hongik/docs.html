@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}홍익 언어 문서{% endblock %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h1>홍익 언어 문서</h1>
+    {% include "hongik/docs/syntax.html" %}
+    {% include "hongik/docs/examples.html" %}
+    {% include "hongik/docs/tutorial.html" %}
+    </div>
+{% endblock %}

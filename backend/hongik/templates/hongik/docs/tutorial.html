@@ -1,0 +1,38 @@
+        <section class="mt-4">
+            <h2>튜토리얼</h2>
+            <p>단계별 튜토리얼로 홍익 언어를 체계적으로 학습할 수 있습니다.</p>
+
+            <h3 class="mt-3">1. 첫 번째 프로그램 만들기</h3>
+            <p>홍익 언어로 "안녕하세요!"를 출력하는 프로그램을 만들어보세요.</p>
+            <pre><code>출력("안녕하세요!")</code></pre>
+            <a href="{% url 'hongik:editor' %}" class="btn btn-outline-primary">에디터에서 실습하기</a>
+
+            <h3 class="mt-3">2. 변수 사용하기</h3>
+            <p>이름을 변수에 저장하고 출력해보세요.</p>
+            <pre><code>이름 = "홍길동"
+출력(이름)</code></pre>
+            <a href="{% url 'hongik:editor' %}" class="btn btn-outline-primary">에디터에서 실습하기</a>
+
+            <h3 class="mt-3">3. 조건문으로 분기하기</h3>
+            <p>나이에 따라 다른 메시지를 출력해보세요.</p>
+            <pre><code>나이 = 20
+만약 나이 >= 20:
+    출력("성인입니다.")
+아니면:
+    출력("미성년자입니다.")</code></pre>
+            <a href="{% url 'hongik:editor' %}" class="btn btn-outline-primary">에디터에서 실습하기</a>
+
+            <h3 class="mt-3">4. 반복문으로 반복하기</h3>
+            <p>반복문을 사용해 0부터 4까지 숫자를 출력해보세요.</p>
+            <pre><code>반복 i = 0 ~ 4:
+    출력(i)</code></pre>
+            <a href="{% url 'hongik:editor' %}" class="btn btn-outline-primary">에디터에서 실습하기</a>
+
+            <h3 class="mt-3">5. 함수로 재사용하기</h3>
+            <p>함수를 정의하고, 이름을 전달해 인사말을 출력해보세요.</p>
+            <pre><code>함수 인사하기(이름):
+    출력("안녕하세요, " + 이름 + "!")
+
+인사하기("홍길동")</code></pre>
+            <a href="{% url 'hongik:editor' %}" class="btn btn-outline-primary">에디터에서 실습하기</a>
+        </section>
